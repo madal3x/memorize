@@ -7,11 +7,17 @@
 import SwiftUI
 
 struct ContentView: View {
-    let emojis = ["🧠", "🫀", "🦷", "💋",  "👨🏽‍🚀",  " 👡",  "🐁",  "🧊",  "🥎",  "🏨",  "📨",  "💝",  "🛵",  "🌞",  "🧑🏻‍🎄",  "🐽",  "☔️",  "🍛"]
-    @State var cnt = 2
+    let bodyParts = ["🧠", "🫀", "🦷", "💋", "👅", "👂", "👀", "🦶🏻"]
+    let food = ["🍔", "🍕", "🥙", "🥟", "🍤", "🍨", "🧁", "🍩"]
+    let people = ["🕵️‍♀️", "👨🏾‍🍳", "👩🏻‍🚒", "🧝🏻‍♂️", "🙅🏾‍♀️", "👯‍♂️", "👩🏼‍🦽", "💃"]
+    
+    @State var emojis: [String] = ["🧠", "🫀", "🦷", "💋", "👅", "👂", "👀", "🦶🏻"]
+    
+    @State var cnt = 4
     
     var body: some View {
         VStack {
+            Text("Memorize!")
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
                     ForEach(emojis[0..<cnt], id: \.self) { emoji in
@@ -24,6 +30,10 @@ struct ContentView: View {
             Spacer()
             HStack {
                 add
+                Spacer()
+                changeEmojis(label: "Body Parts", imageName: "nose", emojisNew: bodyParts)
+                changeEmojis(label: "Food", imageName: "leaf", emojisNew: food)
+                changeEmojis(label: "People", imageName: "figure.wave", emojisNew: people)
                 Spacer()
                 remove
             }
@@ -46,6 +56,18 @@ struct ContentView: View {
             cnt = cnt > 0 ? cnt - 1 : 0
         } label: {
             Image(systemName: "minus.circle")
+        }
+    }
+    
+    func changeEmojis(label: String, imageName: String, emojisNew: [String]) -> some View {
+        Button {
+            emojis = emojisNew.shuffled()
+            cnt = 4
+        } label: {
+            VStack {
+                Image(systemName: imageName)
+                Text(label).font(.caption)
+            }
         }
     }
 }
