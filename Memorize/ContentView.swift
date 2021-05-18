@@ -7,19 +7,27 @@
 import SwiftUI
 
 struct ContentView: View {
-    let bodyParts = ["🧠", "🫀", "🦷", "💋", "👅", "👂", "👀", "🦶🏻"]
-    let food = ["🍔", "🍕", "🥙", "🥟", "🍤", "🍨", "🧁", "🍩"]
+    let bodyParts = ["🧠", "🫀", "🦷", "💋", "👅", "👂", "👀", "🦶🏻", "🤚", "👃"]
+    let food = ["🍔", "🍕", "🥙", "🥟", "🍤", "🍨", "🧁", "🍩", "🍥", "🥮", "☕️", "🧊", "🌭", "🥩", "🍗", "🍖", "🦴", "🥘", "🍝", "🥜", "🍭"]
     let people = ["🕵️‍♀️", "👨🏾‍🍳", "👩🏻‍🚒", "🧝🏻‍♂️", "🙅🏾‍♀️", "👯‍♂️", "👩🏼‍🦽", "💃"]
     
-    @State var emojis: [String] = ["🧠", "🫀", "🦷", "💋", "👅", "👂", "👀", "🦶🏻"]
+    @State var emojis: [String] = ["🧠", "🫀", "🦷", "💋", "👅", "👂", "👀", "🦶🏻", "🤚", "👃"]
     
     @State var cnt = 4
+    
+    func widthThatBestFits(cardCount: Int) -> CGFloat {
+        let sqr: Double = Double(cardCount).squareRoot()
+        let dv = (sqr == sqr.significand)
+            ? sqr
+            : (sqr + 1)
+        return CGFloat(320 / dv)
+    }
     
     var body: some View {
         VStack {
             Text("Memorize!")
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: widthThatBestFits(cardCount: cnt)))]) {
                     ForEach(emojis[0..<cnt], id: \.self) { emoji in
                         CardView(content: emoji)
                             .aspectRatio(2/3, contentMode: .fit)
