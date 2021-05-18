@@ -20,7 +20,7 @@ struct ContentView: View {
         let dv = (sqr == sqr.significand)
             ? sqr
             : (sqr + 1)
-        return CGFloat(320 / dv)
+        return (UIScreen.main.bounds.size.width - 30) / CGFloat(dv)
     }
     
     var body: some View {
