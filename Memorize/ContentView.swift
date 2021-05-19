@@ -6,12 +6,19 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    let bodyParts = ["🧠", "🫀", "🦷", "💋", "👅", "👂", "👀", "🦶🏻", "🤚", "👃"]
-    let food = ["🍔", "🍕", "🥙", "🥟", "🍤", "🍨", "🧁", "🍩", "🍥", "🥮", "☕️", "🧊", "🌭", "🥩", "🍗", "🍖", "🦴", "🥘", "🍝", "🥜", "🍭"]
-    let people = ["🕵️‍♀️", "👨🏾‍🍳", "👩🏻‍🚒", "🧝🏻‍♂️", "🙅🏾‍♀️", "👯‍♂️", "👩🏼‍🦽", "💃"]
+struct Emojis {
+    static let bodyParts = (label: "Body Parts", imageName: "nose",
+                            emojis: ["🧠", "🫀", "🦷", "💋", "👅", "👂", "👀", "🦶🏻", "🤚", "👃"])
     
-    @State var emojis: [String] = ["🧠", "🫀", "🦷", "💋", "👅", "👂", "👀", "🦶🏻", "🤚", "👃"]
+    static let food = (label: "Food", imageName: "leaf",
+                       emojis: ["🍔", "🍕", "🥙", "🥟", "🍤", "🍨", "🧁", "🍩", "🍥", "🥮", "☕️", "🧊", "🌭", "🥩", "🍗", "🍖", "🦴", "🥘", "🍝", "🥜", "🍭"])
+    
+    static let people = (label: "People", imageName: "figure.wave",
+                         emojis: ["🕵️‍♀️", "👨🏾‍🍳", "👩🏻‍🚒", "🧝🏻‍♂️", "🙅🏾‍♀️", "👯‍♂️", "👩🏼‍🦽", "💃"])
+}
+
+struct ContentView: View {
+    @State var emojis: [String] = Emojis.bodyParts.emojis
     
     @State var cnt = 4
     
@@ -39,9 +46,9 @@ struct ContentView: View {
             HStack {
                 add
                 Spacer()
-                changeEmojis(label: "Body Parts", imageName: "nose", emojisNew: bodyParts)
-                changeEmojis(label: "Food", imageName: "leaf", emojisNew: food)
-                changeEmojis(label: "People", imageName: "figure.wave", emojisNew: people)
+                changeEmojis(Emojis.bodyParts.label, Emojis.bodyParts.imageName, Emojis.bodyParts.emojis)
+                changeEmojis(Emojis.food.label, Emojis.food.imageName, Emojis.food.emojis)
+                changeEmojis(Emojis.people.label, Emojis.people.imageName, Emojis.people.emojis)
                 Spacer()
                 remove
             }
@@ -67,7 +74,7 @@ struct ContentView: View {
         }
     }
     
-    func changeEmojis(label: String, imageName: String, emojisNew: [String]) -> some View {
+    func changeEmojis(_ label: String, _ imageName: String, _ emojisNew: [String]) -> some View {
         Button {
             emojis = emojisNew.shuffled()
             cnt = 4
