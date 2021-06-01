@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  EmojiMemoryGameView.swift
 //  Memorize
 //
 //
@@ -25,7 +25,7 @@ func widthThatBestFits(cardCount: Int) -> CGFloat {
     return (UIScreen.main.bounds.size.width - 30) / CGFloat(dv)
 }
 
-struct ContentView: View {
+struct EmojiMemoryGameView: View {
     @ObservedObject var viewModel: EmojiMemoryGame
     
     var body: some View {
@@ -95,7 +95,7 @@ struct ContentView_Previews: PreviewProvider {
     static let game = EmojiMemoryGame()
     
     static var previews: some View {
-        ContentView(viewModel: game).preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
-        ContentView(viewModel: game).preferredColorScheme(.light)
+        EmojiMemoryGameView(viewModel: game).preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
+        EmojiMemoryGameView(viewModel: game).preferredColorScheme(.light)
     }
 }
