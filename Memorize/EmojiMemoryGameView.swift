@@ -11,18 +11,25 @@ struct EmojiMemoryGameView: View {
     
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: widthThatBestFits(cardCount: game.cards.count)))]) {
-                ForEach(game.cards) { card in
-                    CardView(card: card)
-                        .aspectRatio(2/3, contentMode: .fit)
-                        .onTapGesture {
-                            game.choose(card: card)
-                        }
-                }
+            AspectVGrid(items: game.cards, aspectRatio: 2/3) { card in
+                cardView(for: card)
             }
         }
         .foregroundColor(.red)
         .padding(.horizontal)
+    }
+    
+    @ViewBuilder
+    private func cardView(for card: EmojiMemoryGame.Card) -> some View {
+        if card.isMatched && !card.isFaceUp {
+            Rectangle().opacity(0)
+        } else {
+            CardView(card: card)
+                .aspectRatio(2/3, contentMode: .fit)
+                .onTapGesture {
+                    game.choose(card: card)
+                }
+        }
     }
 }
 
@@ -62,13 +69,11 @@ struct Emojis {
                          emojis: ["🕵️‍♀️", "👨🏾‍🍳", "👩🏻‍🚒", "🧝🏻‍♂️", "🙅🏾‍♀️", "👯‍♂️", "👩🏼‍🦽", "💃"])
 }
 
-func widthThatBestFits(cardCount: Int) -> CGFloat {
-    let sqr: Double = Double(cardCount).squareRoot()
-    let dv = (sqr == sqr.significand)
-        ? sqr
-        : (sqr + 1)
-    return (UIScreen.main.bounds.size.width - 30) / CGFloat(dv)
-}
+
+
+
+
+
 
 
 
