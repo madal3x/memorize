@@ -43,6 +43,7 @@ struct CardView: View {
                 if card.isFaceUp {
                     rr.fill().foregroundColor(.white)
                     rr.strokeBorder(lineWidth: 3)
+                    Pie(startAngle: Angle(degrees: 270), endAngle: Angle(degrees: 20)).padding(5).opacity(0.5)
                     Text(card.content).font(font(in: geometry.size))
                 } else if card.isMatched {
                     rr.opacity(0)
