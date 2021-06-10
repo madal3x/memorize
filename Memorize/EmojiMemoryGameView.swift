@@ -36,22 +36,25 @@ struct EmojiMemoryGameView: View {
 struct CardView: View {
     let card: EmojiMemoryGame.Card
     
+    private let fontSize: CGFloat = 32
+    private let fontScale: CGFloat = 0.7
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .center) {
-                let rr = RoundedRectangle(cornerRadius: 20)
-                if card.isFaceUp {
-                    rr.fill().foregroundColor(.white)
-                    rr.strokeBorder(lineWidth: 3)
-                    Pie(startAngle: Angle(degrees: 270), endAngle: Angle(degrees: 20)).padding(5).opacity(0.5)
-                    Text(card.content).font(font(in: geometry.size))
-                } else if card.isMatched {
-                    rr.opacity(0)
-                } else {
-                    rr.fill()
-                }
+                Pie(startAngle: Angle(degrees: 270), endAngle: Angle(degrees: 20)).padding(5).opacity(0.5)
+                Text(card.content)
+                    .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))
+                    .animation(.linear(duration: 1).repeatForever(autoreverses: false))
+                    .font(.system(size: fontSize)) // font has to be fixed size for the animation to work fine
+                    .scaleEffect(scale(thatFits: geometry.size))
             }
+            .cardify(isFaceUp: card.isFaceUp)
         }
+    }
+    
+    private func scale(thatFits size: CGSize) -> CGFloat {
+        min(size.width, size.height) / (fontSize / fontScale)
     }
     
     private func font(in size: CGSize) -> Font {
